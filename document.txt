@@ -1,0 +1,61 @@
+khai baos 1 file blockchain code baop gồm:
+
+pragma solidity ^0.4.25; //khai báo verspion của solidity
+import "./zombieattack.sol"; //khai báo contracts cần liên kết vào
+
+/**
+ * The contractName contract does this and that...
+ */
+contract contractName { //khởi tạo 1 contract
+	/**
+	 * Declare variable ...
+	 */
+	uint amount; //khai báo biến amount kiểu unsign integer, 
+	//uint8,uint16,uint32,...uint256 đều tốn giá trị trị gas bằng uint
+	address user; //biến user kiểu address
+	string name; //biến name kiểu string 
+	struct Username { //khai báo 1 dạng cấu trúc mới kiểu username có dạng user, name
+	  	address user; 
+		string name;
+	}
+	uint[2] fixedArray;//khai báo mảng tên là fixedArray có 2 phần tử, phần tử là kiểu uint
+	string[5] stringArray;//khai báo mảng tên là stringArray có 5 phần tử , phân tử là kiểu string
+	uint[] dynamicArray;//khai báo mảng tên là dynamicArray mở rộng có phần tử là uint
+
+	event btn_click(,,uint result); //khai báo sự kiện để frontent có thể tương tác với solidity
+
+	function contractName () public view returns(uint,string) { //khởi tạo một method
+		/*các thuộc tính: 
+			public sử dụng công khai giá trị biến lưu vào ram tốn nhiều gas,
+			internal sử dụng cho các method và các method inherit gọi được lấy giá trị biến trực tiếp,
+			private chỉ sử dụng cho bản thân,
+			external giống private nhưng chỉ được gọi từ bên ngoài và lấy giá trị biến trực tiếp 
+		*/
+		/*view,pure,...:
+			là các modifier funtion có chứ năng làm lính chốt mà ta có thể call trực tiếp lúc khai báo
+
+		*/
+		/*returns là giá trị trả về ta có thể trả về  nhiều giá trị cùng 1 lúc*/
+		emit btn_click(,,result); //thực hiện sự kiện đã khai báo trên
+		/*BLock chain có hỗ trợ mã hóa dữ liệu trả về kiểu là byte:
+			6e91ec6b618bb462a4a6ee5aa2cb0e9cf30f7a052bb467b0ba58b8748c00d2e5
+		*/
+		uint rand = uint(keccak256(abi.encodePacked("aaaab")));
+	}	
+}
+/*gọi sự kiên trên frontend:
+	contractName.btn_click(error,result){}*/
+/**
+ * working with ERC721...
+ */
+import "./erc721.sol";
+
+contract ERC721 {
+  event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
+  event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);
+
+  function balanceOf(address _owner) external view returns (uint256);
+  function ownerOf(uint256 _tokenId) external view returns (address);
+  function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
+  function approve(address _approved, uint256 _tokenId) external payable;
+}
